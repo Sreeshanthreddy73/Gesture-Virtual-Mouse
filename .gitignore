@@ -1,0 +1,21 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# MediaPipe model files (these are large and auto-downloaded by the script)
+*.task
+gesture_recognizer.task
+hand_landmarker.task
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Project files and screenshots
+*.png
+screenshot_*.png
+canvas_*.png

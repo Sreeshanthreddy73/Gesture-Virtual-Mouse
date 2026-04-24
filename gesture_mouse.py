@@ -78,7 +78,7 @@ class Config:
     BOX_LEFT, BOX_TOP, BOX_RIGHT, BOX_BOTTOM = 100, 80, 540, 400
 
     # Moving Average Window (fallback)
-    SMOOTH_N = 6
+    SMOOTH_N = 2
 
     PINCH_THRESHOLD  = 0.055
     CLICK_COOLDOWN   = 0.35
@@ -179,8 +179,8 @@ class KalmanSmoother:
         self.kf.F = np.array([[1,0,1,0], [0,1,0,1], [0,0,1,0], [0,0,0,1]], dtype=float)
         self.kf.H = np.array([[1,0,0,0], [0,1,0,0]], dtype=float)
         self.kf.P *= 1000.  # high initial uncertainty
-        self.kf.R *= 10.    # measurement noise
-        self.kf.Q *= 0.05   # process noise constraints
+        self.kf.R *= 2.0    # measurement noise
+        self.kf.Q *= 1.0    # process noise constraints
         self._init = False
 
     def update(self, x, y):
@@ -202,7 +202,7 @@ class MouseController:
         self._bx, self._by = deque(maxlen=cfg.SMOOTH_N), deque(maxlen=cfg.SMOOTH_N)
         self.kalman = KalmanSmoother()
         self._lct, self._drg, self._psy = 0.0, False, None
-        pyautogui.FAILSAFE, pyautogui.PAUSE = True, 0.0
+        pyautogui.FAILSAFE, pyautogui.PAUSE = False, 0.0
 
     def _sm(self, x, y):
         if KALMAN_OK:
